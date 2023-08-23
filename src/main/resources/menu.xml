@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<menus>
+   <menu name="系统设置" code="system-setting" url="" icon="&#xe620;" sort="1">
+       <module name="角色列表" code="role-list" url="/system/role/list" icon="&#xe612;" sort="1">
+           <permissions code="role.all" name="所有权限"/>
+           <permissions code="role.select" name="查看权限"/>
+           <permissions code="role.add" name="添加权限"/>
+           <permissions code="role.update" name="修改权限"/>
+           <permissions code="role.delete" name="删除权限"/>
+       </module>
+       <module name="常量列表" code="configuration-list" url="/system/configuration/list" icon="&#xe6b2;" sort="3">
+           <permissions code="configuration.all" name="所有权限"/>
+           <permissions code="configuration.select" name="查看权限"/>
+           <permissions code="configuration.add" name="添加权限"/>
+           <permissions code="configuration.update" name="修改权限"/>
+           <permissions code="configuration.delete" name="删除权限"/>
+       </module>
+       <module name="操作记录" code="operationRecord-list" url="/system/operationRecord/list" icon="&#xe60a;" sort="3">
+           <permissions code="operationRecord.all" name="所有权限"/>
+           <permissions code="operationRecord.select" name="查看权限"/>
+           <permissions code="operationRecord.add" name="添加权限"/>
+           <permissions code="operationRecord.update" name="修改权限"/>
+           <permissions code="operationRecord.delete" name="删除权限"/>
+       </module>
+   </menu>
+    <menu name="系统用户管理" code="sysUser-manage" url="" icon="&#xe613;" sort="2">
+        <module name="系统用户" code="sysUser-list" url="/userlist" icon="&#xe612;" sort="1">
+            <permissions code="sysUser.all" name="所有权限"/>
+            <permissions code="sysUser.select" name="查看权限"/>
+            <permissions code="sysUser.add" name="添加权限"/>
+            <permissions code="sysUser.update" name="修改权限"/>
+            <permissions code="sysUser.delete" name="删除权限"/>
+            <permissions code="sysUser.auth" name="授权权限"/>
+            <permissions code="sysUser.verifyCode" name="登录验证码"/>
+        </module>
+        <module name="系统用户角色" code="sysUser-role-list" url="/sysUser/role/list" icon="&#xe612;" sort="2">
+            <permissions code="sysUser.role.all" name="所有权限"/>
+            <permissions code="sysUser.role.select" name="查看权限"/>
+            <permissions code="sysUser.role.add" name="添加权限"/>
+            <permissions code="sysUser.role.update" name="修改权限"/>
+            <permissions code="sysUser.role.delete" name="删除权限"/>
+        </module>
+    </menu>
+    <menu name="余额宝" code="deposit-manage" url="" icon="&#xe65e;" sort="5">
+        <module name="余额宝设置" url="/deposit/config/list" code="deposit-config" icon="&#xe60a;" sort="1">
+            <permissions code="deposit.config.all" name="所有权限"/>
+            <permissions code="deposit.config.select" name="查看权限"/>
+            <permissions code="deposit.config.add" name="添加权限"/>
+            <permissions code="deposit.config.update" name="修改权限"/>
+            <permissions code="deposit.config.delete" name="删除权限"/>
+        </module>
+        <module name="余额宝用户" url="/deposit/member/list" code="deposit-member-list" icon="&#xe60a;" sort="1">
+            <permissions code="deposit.member.all" name="所有权限"/>
+            <permissions code="deposit.member.select" name="查看权限"/>
+            <permissions code="deposit.member.add" name="添加权限"/>
+            <permissions code="deposit.member.update" name="修改权限"/>
+            <permissions code="deposit.member.delete" name="删除权限"/>
+            <permissions code="deposit.manual.add" name="人工存入"/>
+            <permissions code="deposit.manual.reduce" name="人工提出"/>
+        </module>
+        <module name="余额宝收支记录" url="/deposit/detail/list" code="deposit-member-list" icon="&#xe60a;" sort="1">
+            <permissions code="deposit.detail.all" name="所有权限"/>
+            <permissions code="deposit.detail.select" name="查看权限"/>
+            <permissions code="deposit.detail.add" name="添加权限"/>
+            <permissions code="deposit.detail.update" name="修改权限"/>
+            <permissions code="deposit.detail.delete" name="删除权限"/>
+        </module>
+    </menu>
+</menus>

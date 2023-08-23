@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1, maximum-scale=1, user-scalable=no">
+<script src="mobile/js/mobile.js"></script>
+<link href="mobile/css/style.css" rel="stylesheet" type="text/css" />
+<link href="mobile/css/swiper.min.css" rel="stylesheet" type="text/css" />
+<title>马经图库</title>
+<style>
+    .main{
+        max-width: 750px;
+        margin:auto;
+    }
+</style>
+</head>
+
+<body>
+<div class="main">
+    <div class="notice">
+        <img src="mobile/images/gb.png"/>
+    </div>
+    <div class="header">
+        <div class="logo"><img src="mobile/images/logo.png"></div>
+        <div class="header2">马经图库</div>
+        <div class="header3">
+            <div class="head-txt1"><img src="mobile/images/header-ico.png"></div>
+            <div class="head-txt2">请认准xgmj.com官方下载</div>
+        </div>
+    </div>
+
+    <div class="banner">
+        <div class="swiper-container swiper-container_1">
+            <div class="swiper-wrapper advert-img">
+                <div class="swiper-slide"><a href="https://www.xgmj.com/adverts/zhuanti/index.html"><img src="mobile/images/banner.jpg"></a></div>
+                <div class="swiper-slide"><a href="https://www.xgmj.com/adverts/zhuanti/index.html"><img src="mobile/images/banner1.jpg"></a></div>
+                <div class="swiper-slide"><a href="https://www.xgmj.com/adverts/jieliao/index.html"><img src="mobile/images/banner2.jpg"></a></div>
+            </div>
+            <div class="swiper-pagination swiper-pagination_1"></div>
+        </div>
+    </div>
+
+    <div class="down">
+        <div class="down-btn android-downlaod-url"><a href="http://www.imxiaomang.cn/files/app/2019/10/11/xjmj-app_v1.0.0.apk"><img src="mobile/images/az.png"></a></div>
+        <div class="down-btn ios-downlaod-url"><a href="http://f.netxyi.cn/fwvKfG"><img src="mobile/images/ios.png"></a></div>
+        <div class="down-txt">
+    苹果用户请点击【 <img src="mobile/images/ico1.png"> 】找到点击【<font color="#1dabe0">添加到主屏幕</font>】<br>
+    再也不用记网址，随时找到马经图库
+        </div>
+    </div>
+
+    <div class="tit">马经图库应用介绍</div>
+    <div class="con">本app是一款由香港科技有限公司研發的，一款面向香港地區提供六合彩图纸資訊的免費軟件。是基於公平，公正，公開的原則下，提供-個图纸資訊的免費的軟件。是基於公平，公正，公開的原則下，提供一个共享的平臺。</div>
+
+    <div class="tit">马经图库应用截图</div>
+    <div class="pic">
+        <div class="swiper-container swiper-container_2">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide"><img src="mobile/images/001.jpg" style="width: 4rem"></div>
+                <div class="swiper-slide"><img src="mobile/images/002.jpg" style="width: 4rem"></div>
+                <div class="swiper-slide"><img src="mobile/images/003.jpg" style="width: 4rem"></div>
+                <div class="swiper-slide"><img src="mobile/images/004.jpg" style="width: 4rem"></div>
+            </div>
+            
+            <div class="swiper-pagination swiper-pagination_2"></div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="/mobile/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="/mobile/js/swiper.min.js"></script>
+<script type="text/javascript" src="/mobile/js/scroll.js"></script>
+<script type="text/javascript" src="/js.users.51.la/20406985.js"></script>
+<script>
+    $(function(){
+        // 加载android ios 下载连接
+        $.post(
+            "/mobile/app/version",
+            function(data){
+                if(data.code == 0){
+                    if(null != data.result){
+                        if("" != data.result.android){
+                            $(".android-downlaod-url").find('a').attr("href",data.result.android);
+                        }
+                        if("" != data.result.ios){
+                            $(".ios-downlaod-url").find('a').attr("href",data.result.ios);
+                        }
+                    }
+                }
+            }
+        )
+
+        // 加载下载页广告
+        // $.post(
+        //     "/mobile/download/adverts",
+        //     {},
+        //     function(data){
+        //         if(data.code == 0 && data.result != null){
+        //             console.log(data);
+        //             var html = "";
+        //             var result = data.result;
+        //             for(var i = 0;i < result.length; i++){
+        //                 html += '<div class="swiper-slide"><a href="'+result[i].url+'"><img src="'+result[i].imgPath+'"></a></div>';
+        //             }
+        //             if("" != html){
+        //                 $(".advert-img").empty();
+        //                 $(".advert-img").append(html);
+        //             }
+        //             console.log(html);
+        //         }
+        //     }
+        // );
+    });
+</script>
+</body>
+</html>

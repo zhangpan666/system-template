@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="utf-8">
+    <title>图库管理后台</title>
+    <meta content="图库管理系统" name="description"/>
+    <meta name="renderer" content="webkit">
+    <div th:include="common/header_resource::header_resource"></div>
+</head>
+<body class="childrenBody">
+<blockquote class="layui-elem-quote quoteBox">
+    <form class="layui-form" th:action="${requestUrl}" id="entity_search_form" th:object="${condition}">
+        <div class="layui-form-item">
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" th:field="*{name}" placeholder="常量名称"/>
+            </div>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" th:field="*{code}" placeholder="常量CODE"/>
+            </div>
+            <input type="hidden" class="layui-input" th:field="${page.pageNum}" />
+            <input type="hidden" class="layui-input" th:field="${page.pageSize}" />
+            <button class="layui-btn" type="button" onclick="CommonUtil.queryList()">查询</button>
+        </div>
+        <div class="layui-inline" shiro:hasPermission="configuration.add">
+            <button class="layui-btn layui-btn-normal" id="getConfigurationAddPage" type="button">添加常量</button>
+        </div>
+    </form>
+</blockquote>
+<table class="layui-table">
+    <thead>
+    <tr>
+        <th>常量名称</th>
+        <th>常量CODE</th>
+        <th>常量值</th>
+        <th>状态</th>
+        <th>创建时间</th>
+        <th>修改时间</th>
+        <th width="150px">操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="configuration:${page.list}">
+        <td th:title="${configuration.name}" th:text="${#strings.abbreviate(configuration.name,20)}"></td>
+        <td th:text="${configuration.code}"></td>
+        <td th:text="${#strings.abbreviate(configuration.value,20)}" th:title="点击查看全部"  th:onclick="AlertUtil.alert([[${configuration.value}]])"></td>
+        <td th:if="${configuration.status==1}" th:text="有效"></td>
+        <td th:if="${configuration.status==0}" th:text="无效"></td>
+        <td th:text="${#dates.format(configuration.createTime,'yyyy-MM-dd HH:mm:ss')}"></td>
+        <td th:text="${configuration.updateTime}?${#dates.format(configuration.updateTime,'yyyy-MM-dd HH:mm:ss')}"></td>
+        <td>
+            <button type="button" class="layui-btn layui-btn-normal layui-btn-sm" shiro:hasPermission="configuration.update" th:onclick="|updateById(${configuration.id},'configuration')|" th:text="编辑"></button>
+<!--            <button type="button" class="layui-btn layui-btn-danger layui-btn-sm" th:onclick="|deleteById(${configuration.id},'configuration')|" th:text="删除"></button>-->
+        </td>
+    </tr>
+    </tbody>
+</table>
+<div th:include="common/page::page"></div>
+<script>
+    var form = layer.form;
+    layui.use('form', function () {
+        var form = layui.form; //只有执行了这一步，部分表单元素才会自动修饰成功
+
+        //……
+
+        //但是，如果你的HTML是动态生成的，自动渲染就会失效
+        //因此你需要在相应的地方，执行下述方法来手动渲染，跟这类似的还有 element.init();
+        form.render();
+    });
+</script>
+</body>
+</html>

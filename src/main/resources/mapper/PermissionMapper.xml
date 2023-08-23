@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gallery.manage.common.mapper.PermissionMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.gallery.manage.common.model.Permission">
+        <id column="id" property="id"/>
+        <result column="role_id" property="roleId"/>
+        <result column="menu_id" property="menuId"/>
+        <result column="permission" property="permission"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <select id="getPermissionListByRoleId" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select role_id,menu_id,permission  from t_permission where role_id=#{roleId}
+    </select>
+
+    <delete id="deleteByRoleId">
+        delete from t_permission where role_id=#{roleId}
+    </delete>
+
+</mapper>

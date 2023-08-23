@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gallery.manage.common.mapper.ConfigurationMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.gallery.manage.common.model.Configuration">
+        <id column="id" property="id"/>
+        <result column="code" property="code"/>
+        <result column="value" property="value"/>
+        <result column="name" property="name"/>
+        <result column="status" property="status"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <select id="query" parameterType="com.gallery.manage.common.model.Configuration" resultMap="BaseResultMap">
+        select * from t_configuration
+        <where>
+            <if test="code !=null and code !=''">
+                and code like '%${code}%'
+            </if>
+            <if test="name !=null and name !=''">
+                and name like '%${name}%'
+            </if>
+            <if test="status !=null">
+                and status=#{status}
+            </if>
+             <if test="display !=null">
+                and display=#{display}
+            </if>
+        </where>
+    </select>
+
+    <select id="getByCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select * from t_configuration where code=#{code}
+    </select>
+
+</mapper>

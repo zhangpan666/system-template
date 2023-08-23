@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>首页--layui后台管理模板 2.0</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" href="../layui/css/layui.css" media="all"/>
+    <link rel="stylesheet" href="../css/common/public.css" media="all"/>
+    <script src="/js/common/jquery.min.js"></script>
+    <style>
+
+        div#postion {
+            margin-top: 50%;
+        }
+    </style>
+</head>
+<body class="childrenBody">
+<blockquote class="layui-elem-quote layui-bg-green">
+    <div id="nowTime"></div>
+</blockquote>
+<div class="layui-row layui-col-space10 panel_box">
+    <div class="panel layui-col-xs12 layui-col-sm6 layui-col-md4 layui-col-lg2">
+        <a href="javascript:;" data-url="/gallery/manage/admin/userlist">
+            <div class="panel_icon layui-bg-orange">
+                <i class="layui-anim seraph icon-icon10" data-icon="icon-icon10"></i>
+            </div>
+            <div class="panel_word userAll">
+                <span id="admin_count">0</span>
+                <em>管理员总数</em>
+                <cite class="layui-hide">管理员中心</cite>
+            </div>
+        </a>
+    </div>
+    <div class="panel layui-col-xs12 layui-col-sm6 layui-col-md4 layui-col-lg2">
+        <a href="javascript:;" data-url="/gallery/manage/admin/member/list">
+            <div class="panel_icon layui-bg-orange">
+                <i class="layui-anim seraph icon-icon10" data-icon="icon-icon10"></i>
+            </div>
+            <div class="panel_word userAll">
+                <span id="user_count">0</span>
+                <em>用户总数</em>
+                <cite class="layui-hide">用户中心</cite>
+            </div>
+        </a>
+    </div>
+    <div id="userCount" class="panel layui-col-xs12 layui-col-sm6 layui-col-md4 layui-col-lg2">
+        <a href="javascript:;">
+            <div class="panel_icon layui-bg-cyan">
+                <i class="layui-anim layui-icon" data-icon="&#xe857;">&#xe857;</i>
+            </div>
+            <div class="panel_word outIcons">
+                <p></p>
+                <em>用户统计</em>
+                <cite class="layui-hide">图标管理</cite>
+            </div>
+        </a>
+    </div>
+</div>
+<div class="layui-row layui-col-space10 panel_box">
+    <div class="panel layui-col-xs12 layui-col-sm6 layui-col-md4 layui-col-lg2">
+        <a href="javascript:;" data-url="/gallery/manage/admin/userlist">
+            <div class="panel_icon layui-bg-orange">
+                <i class="layui-anim seraph icon-icon10" data-icon="icon-icon10"></i>
+            </div>
+            <div class="panel_word userAll">
+                <span id="online_admin_count">0</span>
+                <em>在线管理员总数</em>
+                <cite class="layui-hide">管理员中心</cite>
+            </div>
+        </a>
+    </div>
+    <div class="panel layui-col-xs12 layui-col-sm6 layui-col-md4 layui-col-lg2">
+        <a href="javascript:;">
+            <div class="panel_icon layui-bg-blue">
+                <i class="layui-anim seraph icon-clock"></i>
+            </div>
+            <div class="panel_word">
+                <span class="loginTime"></span>
+                <cite>上次登录时间</cite>
+            </div>
+        </a>
+    </div>
+</div>
+
+<div class="layui-row layui-col-space10">
+    <div class="layui-col-lg6 layui-col-md12">
+        <blockquote class="layui-elem-quote title">最新通知 <i class="layui-icon layui-red">&#xe756;</i></blockquote>
+        <table class="layui-table mag0" lay-skin="line">
+            <colgroup>
+                <col>
+                <col width="110">
+            </colgroup>
+            <tbody class="hot_news"></tbody>
+        </table>
+    </div>
+</div>
+<script type="text/javascript" src="../layui/layui.js"></script>
+<script type="text/javascript" src="../js/main.js"></script>
+<script>
+    $('#userCount').on('click', function () {
+        layer.open({
+            type: 2,
+            title: '编辑权限',
+            area: ['1000px', '600px'],
+            fix: false,
+            content: '/margin/gallery/admin/usercount',
+        });
+    });
+
+    $.post("/gallery/manage/admin/index/stat",function (result) {
+        var data = result.data;
+        var adminCount=data.adminCount;
+        var adminOnlineCount=data.adminOnlineCount;
+        var userCount=data.userCount;
+        $("#admin_count").text(adminCount);
+        $("#online_admin_count").text(adminOnlineCount);
+        $("#user_count").text(userCount);
+    },"json");
+
+</script>
+</body>
+</html>

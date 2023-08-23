@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<shiro>
+    <anon>
+        <url>/</url>
+        <url>/scripts/**</url>
+        <url>/pay/**</url>
+        <url>/css/**</url>
+        <url>/fonts/**</url>
+        <url>/images/**</url>
+        <url>/plugins/**</url>
+        <url>/page/**</url>
+        <url>/assets/**</url>
+        <url>/gallery/manage/admin/auth/**</url>
+        <url>/js/**</url>
+        <url>/layui/**</url>
+        <url>/static/**</url>
+        <!-- swagger -->
+        <url>/swagger-ui.html</url>
+        <url>/swagger-resources/**</url>
+        <url>/v2/api-docs</url>
+        <url>/webjars/**</url>
+        <url>/mobile/**</url>
+        <!-- websocket -->
+        <url>/websocket/**</url>
+        <!-- app request -->
+        <url>/gallery/manage/api/**</url>
+    </anon>
+    <logout>
+        <url>/admin/auth/logout</url>
+    </logout>
+    <authc>
+        <url>/**</url>
+    </authc>
+</shiro>

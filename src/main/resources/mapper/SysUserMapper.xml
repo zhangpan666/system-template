@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gallery.manage.common.mapper.SysUserMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.gallery.manage.common.model.SysUser">
+        <id column="id" property="id"/>
+        <result column="username" property="username"/>
+        <result column="password" property="password"/>
+        <result column="nickname" property="nickname"/>
+        <result column="head_img" property="headImg"/>
+        <result column="account_type" property="accountType"/>
+        <result column="mobile" property="mobile"/>
+        <result column="gender" property="gender"/>
+        <result column="wechat_account" property="wechatAccount"/>
+        <result column="wechat_union_id" property="wechatUnionId"/>
+        <result column="wechat_nickname" property="wechatNickname"/>
+        <result column="login_ip" property="loginIp"/>
+        <result column="register_ip" property="registerIp"/>
+        <result column="device_id" property="deviceId"/>
+        <result column="last_login_time" property="lastLoginTime"/>
+        <result column="mobile_model" property="mobileModel"/>
+        <result column="e_mail" property="eMail"/>
+        <result column="os_type" property="osType"/>
+        <result column="status" property="status"/>
+        <result column="allowed_recharge_amount" property="allowedRechargeAmount"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+    <select id="getUserByUsernameAndAccountType" resultMap="BaseResultMap">
+        select * from t_sys_user where username=#{username} and account_type=#{accountType}
+    </select>
+
+
+    <select id="query" parameterType="com.gallery.manage.common.model.SysUser" resultMap="BaseResultMap">
+        select * from t_sys_user
+        <where>
+            <if test="id !=null">
+                and id=#{id}
+            </if>
+            <if test="username !=null and username!=''">
+                and username like '%${username}%'
+            </if>
+            <if test="nickname !=null and nickname !=''">
+                and nickname like '%${nickname}%'
+            </if>
+            <if test="mobile !=null and mobile !=''">
+                and mobile like '%${mobile}%'
+            </if>
+            <if test="status !=null">
+                and status=#{status}
+            </if>
+            <if test="accountType !=null">
+                and account_type=#{accountType}
+            </if>
+                and status !=-1
+        </where>
+                order by create_time desc
+    </select>
+
+
+    <select id="getCount" parameterType="com.gallery.manage.common.model.SysUser" resultType="java.lang.Integer">
+        select count(*)
+        from t_sys_user
+        <where>
+            <if test="id !=null">
+                and id=#{id}
+            </if>
+            <if test="username !=null and username!=''">
+                and username like '%${username}%'
+            </if>
+            <if test="nickname !=null and nickname !=''">
+                and nickname like '%${nickname}%'
+            </if>
+            <if test="mobile !=null and mobile !=''">
+                and mobile like '%${mobile}%'
+            </if>
+            <if test="status !=null">
+                and status=#{status}
+            </if>
+            <if test="accountType !=null">
+                and account_type=#{accountType}
+            </if>
+                and status !=-1
+        </where>
+    </select>
+
+
+
+</mapper>

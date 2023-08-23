@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="utf-8">
+    <title>图库管理后台</title>
+    <meta content="图库管理系统" name="description"/>
+    <meta name="renderer" content="webkit">
+    <div th:include="common/header_resource::header_resource"></div>
+</head>
+<body>
+<div class="layui-carousel" id="test1">
+    <div carousel-item th:if="${!#lists.isEmpty(pictureList)}">
+        <div th:each="picture:${pictureList}" >
+            <img style="position: absolute;top: 0;bottom: 0;right: 0;left: 0;margin: auto;"  th:src="${picture.filePath}"  width="375" th:height="${picture.height*375/picture.width}"></div>
+        </div>
+    </div>
+    <div carousel-item th:if="${#lists.isEmpty(pictureList)}">
+        <div>暂无图片</div>
+    </div>
+</div>
+<script>
+    layui.use('carousel', function(){
+        var carousel = layui.carousel;
+        carousel.render({
+            elem: '#test1'
+            ,width: '100%'
+            ,arrow: 'hover'
+            ,full:true
+        });
+    });
+</script>
+</body>
+</html>

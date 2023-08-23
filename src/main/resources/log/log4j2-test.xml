@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration xmlns:xi="http://www.w3.org/2001/XInclude"
+               status="warn" name="XIncludeDemo">
+
+    <properties>
+        <property name="LOG_HOME">/home/app-logs/system-template/test</property>
+        <!-- 日志备份目录 -->
+        <property name="BACKUP_HOME">backup</property>
+        <property name="SERVER_NAME">cp-web</property>
+        <property name="EVERY_FILE_SIZE">50M</property><!-- 日志切割的最小单位 -->
+        <property name="OUTPUT_LOG_LEVEL">DEBUG</property><!-- 日志输出级别 -->
+        <property name="KEEP_LOG_DAY">3d</property> <!-- 保留日志天数 D H M S 分别对应天 小时 分钟 秒 -->
+    </properties>
+
+    <xi:include href="log4j2-appender.xml"></xi:include>
+    <xi:include href="log4j2-loggers.xml"></xi:include>
+
+
+</configuration>

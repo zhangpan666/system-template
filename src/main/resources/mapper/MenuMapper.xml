@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gallery.manage.common.mapper.MenuMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.gallery.manage.common.model.Menu">
+        <id column="id" property="id"/>
+        <result column="parent_id" property="parentId"/>
+        <result column="name" property="name"/>
+        <result column="code" property="code"/>
+        <result column="url" property="url"/>
+        <result column="icon" property="icon"/>
+        <result column="sort" property="sort"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+
+    <select id="getMenu" resultMap="BaseResultMap" parameterType="com.gallery.manage.common.model.Menu">
+        select * from t_menu
+        <where>
+            <if test="id !=null">
+                and id=#{id}
+            </if>
+            <if test="parentId !=null">
+                and parent_id=#{parentId}
+            </if>
+            <if test='name !=null and name !=""'>
+                and name=#{name}
+            </if>
+            <if test='code !=null and code !=""'>
+                and code=#{code}
+            </if>
+            <if test="url !=null and url !=''">
+                and url=#{url}
+            </if>
+            <if test='icon !=null and icon !=""'>
+                and icon=#{icon}
+            </if>
+            <if test="sort !=null">
+                and sort=#{sort}
+            </if>
+        </where>
+        limit 1
+    </select>
+
+</mapper>

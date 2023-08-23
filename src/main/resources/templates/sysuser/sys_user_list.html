@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="utf-8">
+    <title>图库管理后台</title>
+    <meta content="图库管理系统" name="description"/>
+    <meta name="renderer" content="webkit">
+    <div th:include="common/header_resource::header_resource"></div>
+</head>
+<body class="childrenBody">
+<blockquote class="layui-elem-quote quoteBox">
+    <form class="layui-form" th:action="${requestUrl}" id="entity_search_form" th:object="${condition}">
+        <div class="layui-form-item">
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" th:field="*{id}" placeholder="ID"/>
+            </div>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" th:field="*{nickname}" placeholder="昵称"/>
+            </div>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" th:field="*{username}" placeholder="用户名"/>
+            </div>
+            <input type="hidden" class="layui-input" th:field="${page.pageNum}" />
+            <input type="hidden" class="layui-input" th:field="${page.pageSize}" />
+            <button class="layui-btn" type="button" onclick="CommonUtil.queryList()">查询</button>
+        </div>
+        <div class="layui-inline" shiro:hasPermission="sysUser.add">
+            <button class="layui-btn layui-btn-normal" id="getSysUserAddPage" type="button">添加用户</button>
+        </div>
+        <div class="layui-inline" shiro:hasPermission="sysUser.delete">
+            <button class="layui-btn layui-btn-danger" type="button" >批量删除</button>
+        </div>
+    </form>
+</blockquote>
+<table class="layui-table">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>昵称</th>
+        <th>用户名</th>
+        <th>允许充值额度</th>
+        <th>在线状态</th>
+        <th>上次登录</th>
+        <th>本次登录</th>
+        <th>创建时间</th>
+        <th>修改时间</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="sysUser:${page.list}">
+        <td th:text="${sysUser.id}"></td>
+        <td th:text="${sysUser.nickname}"></td>
+        <td th:text="${sysUser.username}"></td>
+        <td th:text="${sysUser.allowedRechargeAmount}"></td>
+        <td th:if="${sysUser.online==1}" th:text="在线" style="color: red"></td>
+        <td th:if="${sysUser.online==0}" th:text="离线"></td>
+        <td th:text="${#dates.format(sysUser.lastLoginTime,'yyyy-MM-dd HH:mm:ss')}"></td>
+        <td th:text="${#dates.format(sysUser.recentLoginTime,'yyyy-MM-dd HH:mm:ss')}"></td>
+        <td th:text="${#dates.format(sysUser.createTime,'yyyy-MM-dd HH:mm:ss')}"></td>
+        <td th:text="${#dates.format(sysUser.updateTime,'yyyy-MM-dd HH:mm:ss')}"></td>
+        <td>
+           <div th:if="${sysUser.username !='admin'}">
+               <button type="button" class="layui-btn layui-btn-normal layui-btn-sm" shiro:hasPermission="sysUser.update" th:onclick="updateById([[${sysUser.id}]],'sysUser')" th:text="编辑"></button>
+               <button type="button" class="layui-btn layui-btn-danger layui-btn-sm" shiro:hasPermission="sysUser.delete" th:onclick="deleteById([[${sysUser.id}]],'sysUser')" th:text="删除"></button>
+           </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<div th:include="common/page::page"></div>
+<script>
+    var form = layer.form;
+    layui.use('form', function () {
+        var form = layui.form; //只有执行了这一步，部分表单元素才会自动修饰成功
+
+        //……
+
+        //但是，如果你的HTML是动态生成的，自动渲染就会失效
+        //因此你需要在相应的地方，执行下述方法来手动渲染，跟这类似的还有 element.init();
+        form.render();
+    });
+</script>
+</body>
+</html>

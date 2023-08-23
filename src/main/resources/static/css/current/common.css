@@ -1,0 +1,16 @@
+.layui-table th{
+    text-align: center;
+    vertical-align: middle;
+    font-weight: bold;
+}
+.layui-table td{
+    text-align: center;
+}
+
+.input1{
+    width: 250px;
+}
+
+.input2{
+    width: 260px;
+}

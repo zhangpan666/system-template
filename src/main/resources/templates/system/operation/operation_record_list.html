@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="utf-8">
+    <title>图库管理后台</title>
+    <meta content="图库管理系统" name="description"/>
+    <meta name="renderer" content="webkit">
+    <div th:include="common/header_resource::header_resource"></div>
+</head>
+<body class="childrenBody">
+<blockquote class="layui-elem-quote quoteBox">
+    <form class="layui-form" th:action="${requestUrl}" id="entity_search_form" th:method="post" th:object="${condition}">
+        <div class="layui-form-item">
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" th:field="*{relatedId}" placeholder="关联ID"/>
+            </div>
+            <div class="layui-input-inline">
+                <select th:name="module">
+                    <option value="" th:text="业务模块"></option>
+                    <option th:value="后台用户" th:text="后台用户" th:selected="*{module=='后台用户'}"></option>
+                    <option th:value="消息模板" th:text="消息模板" th:selected="*{module=='消息模板'}"></option>
+                    <option th:value="公司入款账户" th:text="公司入款账户" th:selected="*{module=='公司入款账户'}"></option>
+                    <option th:value="公司入款" th:text="公司入款" th:selected="*{module=='公司入款'}"></option>
+                    <option th:value="线上入款" th:text="线上入款" th:selected="*{module=='线上入款'}"></option>
+                    <option th:value="银行" th:text="银行" th:selected="*{module=='银行'}"></option>
+                    <option th:value="人工存提" th:text="人工存提" th:selected="*{module=='人工存提'}"></option>
+                    <option th:value="系统存提" th:text="系统存提" th:selected="*{module=='系统存提'}"></option>
+                    <option th:value="会员出款" th:text="会员出款" th:selected="*{module=='会员出款'}"></option>
+                    <option th:value="修改银行卡" th:text="修改银行卡" th:selected="*{module=='修改银行卡'}"></option>
+                    <option th:value="提现" th:text="提现" th:selected="*{module=='提现'}"></option>
+                    <option th:value="用户银行卡信息" th:text="用户银行卡信息" th:selected="*{module=='用户银行卡信息'}"></option>
+                    <option th:value="游戏" th:text="游戏" th:selected="*{module=='游戏'}"></option>
+                    <option th:value="会员列表" th:text="会员列表" th:selected="*{module=='会员列表'}"></option>
+                    <option th:value="用户层级" th:text="用户层级" th:selected="*{module=='用户层级'}"></option>
+                    <option th:value="用户账户" th:text="用户账户" th:selected="*{module=='用户账户'}"></option>
+                    <option th:value="会员层级管理" th:text="会员层级管理" th:selected="*{module=='会员层级管理'}"></option>
+                    <option th:value="会员管理" th:text="会员管理" th:selected="*{module=='会员管理'}"></option>
+                    <option th:value="会员备注" th:text="会员备注" th:selected="*{module=='会员备注'}"></option>
+                    <option th:value="角色" th:text="角色" th:selected="*{module=='角色'}"></option>
+                    <option th:value="常量配置" th:text="常量配置" th:selected="*{module=='常量配置'}"></option>
+                    <option th:value="用户角色" th:text="用户角色" th:selected="*{module=='用户角色'}"></option>
+                    <option th:value="代理工资设置" th:text="代理工资设置" th:selected="*{module=='代理工资设置'}"></option>
+                    <option th:value="代理" th:text="代理" th:selected="*{module=='代理'}"></option>
+                    <option th:value="分红管理" th:text="分红管理" th:selected="*{module=='分红管理'}"></option>
+                    <option th:value="免提直充" th:text="免提直充" th:selected="*{module=='免提直充'}"></option>
+                    <option th:value="充值菜单" th:text="充值菜单" th:selected="*{module=='充值菜单'}"></option>
+                    <option th:value="提现菜单" th:text="提现菜单" th:selected="*{module=='提现菜单'}"></option>
+                    <option th:value="在线支付平台配置" th:text="在线支付平台配置" th:selected="*{module=='在线支付平台配置'}"></option>
+                    <option th:value="在线支付金额配置" th:text="在线支付金额配置" th:selected="*{module=='在线支付金额配置'}"></option>
+                </select>
+            </div>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" th:field="*{description}" placeholder="操作内容"/>
+            </div>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" th:field="*{operationUserId}" placeholder="操作者ID"/>
+            </div>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" th:field="*{ip}" placeholder="IP"/>
+            </div>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" th:field="*{username}" placeholder="用户名"/>
+            </div>
+            <input type="hidden" class="layui-input" th:field="${page.pageNum}" />
+            <input type="hidden" class="layui-input" th:field="${page.pageSize}" />
+            <button class="layui-btn" type="button" onclick="CommonUtil.queryList()">查询</button>
+        </div>
+    </form>
+</blockquote>
+<table class="layui-table">
+    <thead>
+    <tr>
+        <th>业务模块</th>
+        <th>关联ID</th>
+        <th>操作内容</th>
+        <th>操作人ID</th>
+        <th>用户名</th>
+        <th>IP</th>
+        <th>时间</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="operationRecord:${page.list}">
+        <td th:text="${operationRecord.module}"></td>
+        <td th:text="${#strings.abbreviate(operationRecord.relatedId,20)}" th:title="${operationRecord.relatedId}"></td>
+        <td th:text="${operationRecord.description}"></td>
+        <td th:text="${operationRecord.operationUserId}"></td>
+        <td th:text="${operationRecord.username}"></td>
+        <td th:text="${operationRecord.ip}"></td>
+        <td th:text="${#dates.format(operationRecord.createTime,'yyyy-MM-dd HH:mm:ss')}"></td>
+    </tr>
+    </tbody>
+</table>
+<div th:include="common/page::page"></div>
+<script>
+    var form = layer.form;
+    layui.use('form', function () {
+        var form = layui.form; //只有执行了这一步，部分表单元素才会自动修饰成功
+
+        //……
+
+        //但是，如果你的HTML是动态生成的，自动渲染就会失效
+        //因此你需要在相应的地方，执行下述方法来手动渲染，跟这类似的还有 element.init();
+        form.render();
+    });
+</script>
+</body>
+</html>

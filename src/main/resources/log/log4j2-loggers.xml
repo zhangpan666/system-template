@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+
+<loggers>
+<!--过滤掉spring和hibernate的一些无用的debug信息-->
+<Logger name="org.elasticsearch.transport.netty4" level="INFO"/>
+<Logger name="org.apache.kafka" level="INFO"/>
+<Logger name="businessLog">
+    <appender-ref ref="RollingFileCrowd"/>
+</Logger>
+<Logger name="request">
+    <appender-ref ref="RequestLogFile"/>
+</Logger>
+<Logger name="withdraw">
+    <appender-ref ref="WithdrawLogFile"/>
+</Logger>
+<ROOT level="debug">
+    <appender-ref ref="Console"/>
+    <appender-ref ref="RollingFileALL"/>
+    <appender-ref ref="RollingFileInfo"/>
+    <appender-ref ref="RollingFileWarn"/>
+    <appender-ref ref="RollingFileError"/>
+    <!-- <appender-ref ref="RollingFileCrowd"/> -->
+</ROOT>
+</loggers>

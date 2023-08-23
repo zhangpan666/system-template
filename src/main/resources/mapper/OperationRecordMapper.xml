@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.gallery.manage.common.mapper.OperationRecordMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.gallery.manage.common.model.OperationRecord">
+        <id column="id" property="id"/>
+        <result column="related_id" property="relatedId"/>
+        <result column="module" property="module"/>
+        <result column="description" property="description"/>
+        <result column="operation_user_id" property="operationUserId"/>
+        <result column="related_type" property="relatedType"/>
+        <result column="ip" property="ip"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_time" property="updateTime"/>
+    </resultMap>
+
+
+    <select id="query" parameterType="com.gallery.manage.common.model.OperationRecord" resultMap="BaseResultMap">
+        select a.*,b.username from t_operation_record a left join t_sys_user b on a.operation_user_id=b.id
+        <where>
+            <if test="relatedId !=null and relatedId !=''">
+                and a.related_id like '%${relatedId}%'
+            </if>
+            <if test="relatedType !=null">
+                and a.related_type=#{relatedType}
+            </if>
+            <if test="description !=null and description !=''">
+                and a.description like '%${description}%'
+            </if>
+            <if test="module !=null and module !=''">
+                and a.module=#{module}
+            </if>
+            <if test="ip !=null and ip !=''">
+                and a.ip=#{ip}
+            </if>
+            <if test="operationUserId !=null">
+                and a.operation_user_id=#{operationUserId}
+            </if>
+            <if test="username !=null and username !=''">
+                and b.username like '%${username}%'
+            </if>
+        </where>
+        order by a.create_time desc
+    </select>
+
+</mapper>

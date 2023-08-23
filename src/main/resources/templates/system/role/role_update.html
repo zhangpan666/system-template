@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="utf-8">
+    <title>图库管理后台</title>
+    <meta content="图库管理系统" name="description"/>
+    <meta name="renderer" content="webkit">
+    <div th:include="common/header_resource::header_resource"></div>
+</head>
+<body>
+<form class="layui-form"  onsubmit="return roleSaveOrUpdate()" id="form" th:object="${roleDetail}">
+    <br>
+    <input type="hidden" th:field="*{id}">
+    <div class="layui-form-item">
+        <label class="layui-form-label">角色名称</label>
+       <div class="layui-input-inline">
+           <input type="text" th:field="*{roleName}" required lay-verify="required" placeholder="角色名称" autocomplete="off" class="layui-input input1">
+       </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">角色CODE</label>
+       <div class="layui-input-inline">
+           <input type="text"th:field="*{roleCode}" required lay-verify="required" placeholder="角色CODE，请使用英文字符" autocomplete="off" class="layui-input input1">
+       </div>
+    </div>
+    <div class="layui-form-item" shiro:hasPermission="role.update">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit type="submit">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+<script>
+    var form = layer.form;
+    layui.use('form', function () {
+        var form = layui.form; //只有执行了这一步，部分表单元素才会自动修饰成功
+
+        //……
+
+        //但是，如果你的HTML是动态生成的，自动渲染就会失效
+        //因此你需要在相应的地方，执行下述方法来手动渲染，跟这类似的还有 element.init();
+        form.render();
+    });
+
+    form.render();
+</script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+@charset "utf-8";
+/* CSS Document */
+* { margin: 0; padding: 0; list-style: none; word-break: break-all;}
+html {}
+body { color: #fff; text-align: center; font: 0.24rem/1.4 "微软雅黑"; background: #fff;}
+img { max-width: 100%; height: auto; border: 0; vertical-align: middle;}
+table {border-collapse: collapse;border-spacing: 0 }
+input, select, button, textarea {font-size: 100%;font-family: inherit;margin: 0;padding: 0;outline: none; }
+a { color: inherit; text-decoration: none; }
+
+.wrapper { max-width: 7.5rem; height: 100vh; min-height: 13.34rem; margin: 0 auto; overflow: hidden; background: url(../images/bg-t.jpg) top center no-repeat #0243a8; background-size: 100% auto; position: relative;}
+.box { height: 100vh; min-height: 13.34rem; margin: 0 auto; overflow: hidden; background: url(../images/bg-f.jpg) bottom center no-repeat; background-size: 100% auto;}
+.logo { height: 1.46rem; margin-top: 0.97rem;}
+.logo img { width: 4.2rem; height: 1.35rem;}
+.txt1 { height: 0.78rem; font-size: 0.33rem; font-weight: bold;}
+.txt2 { height: 1.15rem; font-weight: bold;}
+.down {}
+.down a { display: inline-block;}
+.down a:hover { -webkit-filter: brightness(120%); filter: brightness(120%);}
+.down .btn-ios { margin-bottom: 0.34rem;}
+.down .btn-ios img { width: 4.16rem; height: 1.23rem;}
+.down .btn-az { margin-bottom: 0.4rem;}
+.down .btn-az img { width: 4.16rem; height: 1.23rem;}
+.down .btn-web {}
+.down .btn-web img { width: 4.04rem; height: 1rem;}
+.copy { width: 4.2rem; height: 0.36rem; margin: auto; border-radius: 0.36rem; display: inline-block; font-size: 0.2rem; color: #003fa7; background: rgba(255,255,255,.8); position: fixed; left: 0; right: 0; bottom: 0.27rem;}
+
+.kefu { width: 0.73rem; height: 0.98rem; position: absolute; margin: auto; top: 3.1rem; right: 0;}
+.kefu a { width: 0.73rem; height: 0.98rem; display: inline-block;}
+.kefu a:hover { -webkit-filter: brightness(120%); filter: brightness(120%);}

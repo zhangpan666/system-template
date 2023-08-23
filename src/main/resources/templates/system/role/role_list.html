@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="utf-8">
+    <title>图库管理后台</title>
+    <meta content="图库管理系统" name="description"/>
+    <meta name="renderer" content="webkit">
+    <link rel="icon" href="/images/favicon.ico">
+    <div th:include="common/header_resource::header_resource"></div>
+</head>
+<body class="childrenBody">
+<blockquote class="layui-elem-quote quoteBox">
+    <form class="layui-form role_search" th:action="${requestUrl}" id="entity_search_form">
+        <div class="layui-form-item">
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" th:field="${condition.roleName}" placeholder="角色名称"/>
+            </div>
+            <div class="layui-input-inline">
+                <input type="text" class="layui-input" th:field="${condition.roleCode}" placeholder="角色CODE"/>
+            </div>
+            <input type="hidden" class="layui-input" th:field="${page.pageNum}" />
+            <input type="hidden" class="layui-input" th:field="${page.pageSize}" />
+            <button class="layui-btn" type="button" onclick="CommonUtil.queryList()">查询</button>
+        </div>
+        <div class="layui-inline">
+            <button class="layui-btn layui-btn-normal" id="getRoleAddPage" type="button" shiro:hasPermission="role.add">添加角色</button>
+        </div>
+        <div class="layui-inline">
+            <button class="layui-btn layui-btn-danger" type="button" shiro:hasPermission="role.delete">批量删除</button>
+        </div>
+    </form>
+</blockquote>
+<table class="layui-table">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>角色名称</th>
+        <th>角色CODE</th>
+        <th>创建时间</th>
+        <th>修改时间</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="role:${page.list}">
+        <td th:text="${role.id}"></td>
+        <td th:text="${role.roleName}"></td>
+        <td th:text="${role.roleCode}"></td>
+        <td th:text="${#dates.format(role.createTime,'yyyy-MM-dd HH:mm:ss')}"></td>
+        <td th:if="${role.updateTime ==null}"></td>
+        <td th:if="${role.updateTime !=null}" th:text="${#dates.format(role.updateTime,'yyyy-MM-dd HH:mm:ss')}"></td>
+        <td align="center">
+            <button type="button" shiro:hasPermission="role.update" class="layui-btn layui-btn-normal layui-btn-sm" th:onclick="|updateById( ${role.id},'role')|" th:text="编辑"></button>
+            <button type="button" shiro:hasPermission="role.select"  class="layui-btn layui-btn-normal layui-btn-sm" th:onclick="|updateById( ${role.id},'permission')|" th:text="权限设置"></button>
+            <button type="button" shiro:hasPermission="role.delete" class="layui-btn layui-btn-danger layui-btn-sm" th:onclick="|deleteById(${role.id} ,'role')|" th:text="删除"></button>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<div th:include="common/page::html"></div>
+<script>
+    var form = layer.form;
+    layui.use('form', function () {
+        var form = layui.form; //只有执行了这一步，部分表单元素才会自动修饰成功
+
+        //……
+
+        //但是，如果你的HTML是动态生成的，自动渲染就会失效
+        //因此你需要在相应的地方，执行下述方法来手动渲染，跟这类似的还有 element.init();
+        form.render();
+    });
+</script>
+</body>
+</html>

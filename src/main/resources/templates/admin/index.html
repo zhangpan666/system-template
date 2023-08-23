@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <meta charset="utf-8">
+    <title>香港图库购彩管理后台-主页</title>
+    <meta content="香港图库购彩管理系统" name="description"/>
+    <meta name="renderer" content="webkit">
+    <link rel="icon" href="/images/favicon.ico">
+    <div th:include="common/header_resource::header_resource"></div>
+</head>
+<body class="main_body">
+<audio id="notice" th:src="@{/audio/yinxiao1323.mp3}" loop></audio>
+<div class="layui-layout layui-layout-admin">
+    <!-- 顶部 -->
+    <div class="layui-header header">
+        <div class="layui-main mag0">
+            <a href="javascript:location.reload()" class="logo">香港图库购彩</a>
+            <!-- 显示/隐藏菜单 -->
+            <a href="javascript:;" class="seraph hideMenu icon-caidan"></a>
+            <!-- 顶级菜单 -->
+            <ul class="layui-nav mobileTopLevelMenus" mobile>
+                <li class="layui-nav-item" data-menu="contentManagement">
+                    <a href="javascript:;"><i class="seraph icon-caidan"></i><cite>后台管理</cite></a>
+                    <dl class="layui-nav-child">
+                        <dd class="layui-this" data-menu="contentManagement"><a href="javascript:;"><i
+                                class="layui-icon" data-icon="&#xe63c;">&#xe63c;</i><cite>内容管理</cite></a></dd>
+                        <dd data-menu="memberCenter"><a href="javascript:;"><i class="seraph icon-icon10"
+                                                                               data-icon="icon-icon10"></i><cite>用户中心</cite></a>
+                        </dd>
+                        <dd data-menu="systemeSttings"><a href="javascript:;"><i class="layui-icon"
+                                                                                 data-icon="&#xe620;">&#xe620;</i><cite>系统设置</cite></a>
+                        </dd>
+                        <dd data-menu="seraphApi"><a href="javascript:;"><i class="layui-icon" data-icon="&#xe705;">&#xe705;</i><cite>使用文档</cite></a>
+                        </dd>
+                    </dl>
+                </li>
+            </ul>
+            <!-- 顶部右侧菜单 -->
+            <ul class="layui-nav top_menu">
+<!--                <li class="layui-nav-item" pc>-->
+<!--                    <a href="javascript:;" class="clearCache"><i class="layui-icon"-->
+<!--                                                                 data-icon="&#xe640;">&#xe640;</i><cite>清除缓存</cite><span-->
+<!--                            class="layui-badge-dot"></span></a>-->
+<!--                </li>-->
+<!--                <li class="layui-nav-item lockcms" pc>-->
+<!--                    <a href="javascript:;"><i class="seraph icon-lock"></i><cite>锁屏</cite></a>-->
+<!--                </li>-->
+                <li class="layui-nav-item" id="userInfo">
+                    <a href="javascript:;"><cite class="adminName"
+                                                 th:text="${#strings.abbreviate(loginInfo.nickname,10)}"></cite></a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:getChangePasswordPage()">
+                            <i class="seraph icon-xiugai" data-icon="icon-xiugai"></i><cite>修改密码</cite></a>
+                        </dd>
+                        <dd><a href="javascript:;" class="showMessage">
+                            <i class="layui-icon">&#xe645;</i><cite>系统消息</cite></a>
+                        </dd>
+                        <dd pc><a shiro:hasPermission="user.verifyCode" href="javascript:;" id="login-verifycode">
+                            <i class="layui-icon">&#xe61b;</i><cite>登录验证码</cite></a>
+                        </dd>
+                        <dd><a href="/gallery/manage/admin/auth/logout" class="signOut">
+                            <i class="seraph icon-tuichu"></i><cite>退出</cite></a>
+                        </dd>
+                    </dl>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- 左侧导航 -->
+    <div class="layui-side layui-bg-black">
+        <div class="navBar layui-side-scroll" id="navBar">
+            <ul class="layui-nav layui-nav-tree">
+                <li class="layui-nav-item layui-this">
+                    <a href="javascript:;" data-url="/page/main.html"><i class="layui-icon" data-icon=""></i><cite>后台首页</cite></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- 右侧内容 -->
+    <div class="layui-body layui-form">
+        <div class="layui-tab mag0" lay-filter="bodyTab" id="top_tabs_box">
+            <ul class="layui-tab-title top_tab" id="top_tabs">
+                <li class="layui-this" lay-id=""><i class="layui-icon">&#xe68e;</i> <cite>后台首页</cite></li>
+            </ul>
+            <ul class="layui-nav closeBox">
+                <li class="layui-nav-item">
+                    <a href="javascript:;"><i class="layui-icon caozuo">&#xe643;</i> 页面操作</a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="javascript:;" class="refresh refreshThis"><i class="layui-icon">&#x1002;</i>
+                            刷新当前</a></dd>
+                        <dd><a href="javascript:;" class="closePageOther"><i class="seraph icon-prohibit"></i>关闭其他</a>
+                        </dd>
+                        <dd><a href="javascript:;" class="closePageAll"><i class="seraph icon-guanbi"></i>关闭全部</a></dd>
+                    </dl>
+                </li>
+            </ul>
+            <div class="layui-tab-content clildFrame">
+                <div class="layui-tab-item layui-show">
+                    <iframe src="/page/main.html"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 底部 -->
+    <div class="layui-footer footer">
+        <p><span>copyright &copy;2020 香港图库购彩</span></p>
+    </div>
+</div>
+<script>
+    var form = layer.form;
+    layui.use('form', function () {
+        var form = layui.form; //只有执行了这一步，部分表单元素才会自动修饰成功
+
+        //……
+
+        //但是，如果你的HTML是动态生成的，自动渲染就会失效
+        //因此你需要在相应的地方，执行下述方法来手动渲染，跟这类似的还有 element.init();
+        form.render();
+    });
+    var d = sessionStorage.getItem("pwdKey");
+    if (d == 1 || d == "1") {
+        suo();
+    }
+
+
+    $('.lockcms').on("click", function () {
+        pwdSet();
+    })
+
+    function pwdSet() {
+        layer.prompt({title: '请设置锁屏密码', formType: 1}, function (pass, index) {
+            layer.close(index);
+            layer.prompt({title: '再次确认', formType: 1}, function (text, index) {
+                if (text == pass) {
+                    sessionStorage.setItem("pwd", pass);
+                    sessionStorage.setItem("pwdKey", "1");
+                    suo();
+                } else {
+                    layer.close(index)
+                    pwdSet();
+                    layer.msg("密码不一致", {icon: 2})
+                }
+            });
+        });
+    }
+
+    function suo() {
+        window.location.href = "/page/suoping.html"
+    }
+
+    $("#login-verifycode").click(function () {
+        layer.prompt({
+            formType: 0,
+            title: '请填写登录用户名',
+            value: '',
+            area: ['200px', '50px']
+        }, function (value, index, elem) {
+            layer.close(index);
+            googleAuthQrCode(value);
+        });
+    });
+
+    function googleAuthQrCode(username) {
+        if (username == null || username == '') {
+            AlertUtil.error("请填写用户名!", 1500);
+            return;
+        }
+        var url = "/gallery/manage/admin/user/googleAuthQrCode?username=" + username;
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', url, true);
+        xhr.responseType = "blob";
+        xhr.setRequestHeader("client_type", "DESKTOP_WEB");
+        xhr.onload = function () {
+            console.log(this.status);
+            if (this.status == 200) {
+                var blob = this.response;
+                var img = document.createElement("img");
+                img.onload = function (e) {
+                    window.URL.revokeObjectURL(img.src);
+                };
+                img.src = window.URL.createObjectURL(blob);
+                var imgUrl = $(img).attr("src");
+                openImg(imgUrl);
+            } else {
+                layer.msg("请填写用户名!", {icon: 2})
+            }
+        }
+        xhr.send();
+    }
+
+    function openImg(url) {
+        layer.open({
+            type: 1
+            ,
+            title: '扫描二维码,获取验证码' //不显示标题栏
+            ,
+            closeBtn: false
+            ,
+            area: '500px;'
+            ,
+            shade: 0.8
+            ,
+            id: 'layui-QR-code' //设定一个id，防止重复弹出
+            ,
+            btn: ['确定', '关闭']
+            ,
+            btnAlign: 'c'
+            ,
+            moveType: 1 //拖拽模式，0或者1
+            ,
+            content: '<div style="padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-weight: 300;">' +
+                '<img src="' + url + '" style="width: 350px;height: 350px;"/>' +
+                '</div>'
+            ,
+            success: function (index, layero) {
+
+            }
+        });
+    }
+
+
+    function getChangePasswordPage() {
+        CommonUtil.open('修改密码', ['850px', '670px'], '/gallery/manage/admin/user/getChangePasswordPage');
+    }
+
+
+</script>
+
+<script type="text/javascript" th:inline="javascript">
+    var socket;
+    if (!window.WebSocket) {
+        window.WebSocket = window.MozWebSocket;
+    }
+    if (window.WebSocket) {
+        socket=connect();
+        socket.onmessage = function (event) {
+           var message = event.data;
+           var obj= JSON.parse(message);
+           var messageType=obj.messageType;
+           var content= obj.content;
+           var title= obj.title;
+           var url= obj.url;
+           if (messageType==1){
+               AlertUtil.confirm(content, function () {
+                   window.location.reload();
+               });
+           }else {
+             var sound= document.getElementById("notice");
+             if (sound!=null){
+                 sound.play();
+             }
+               AlertUtil.open("通知",content,"rb",function () {
+                   sound.pause();
+               },['确定', '全部关闭'],function () {
+                   sound.pause();
+                   CommonUtil.open(title, ['850px', '650px'], url);
+               },function () {
+                   sound.pause();
+               });
+           }
+        };
+        socket.onopen = function (event) {
+            setInterval(heartbeat,2*1000);
+            console.log("WebSocket。。。。。。已连接"+new Date() +"\r\n");
+        };
+        socket.onclose = function (event) {
+            socket.close();
+            console.log("WebSocket。。。。。。已关闭"+new Date() +"\r\n");
+        };
+        socket.onerror = function (event) {
+            console.log("连接发生错误"+new Date() +"\r\n");
+        };
+    } else {
+        AlertUtil.error("您的浏览器不支持WebSocket协议！"+new Date() +"\r\n");
+    }
+
+    function heartbeat() {
+        if (socket!=null&&socket.readyState==WebSocket.OPEN) {
+            console.log("发送心跳  "+new Date());
+            socket.send("0");
+        }else{
+            socket=connect();
+            if (socket==null||socket.readyState!=WebSocket.OPEN){
+                console.log("心跳失败，连接断开！"+new Date() +"\r\n");
+            }
+        }
+
+    }
+    window.onbeforeunload=function () {
+       if ( socket !=null && socket.readyState==WebSocket.OPEN){
+           console.log("刷新页面，关闭WebSocket连接"+new Date() +"\r\n");
+           socket.close();
+       }
+    }
+
+    function connect() {
+       return new WebSocket([[${websocketUrl}]]);
+    }
+
+    startAudio();
+
+    function startAudio() {
+        AlertUtil.confirm("您的浏览器已禁用音频自动播放，请点击确认开启",function () {
+            var sound= document.getElementById("notice");
+            if (sound!=null){
+                sound.play();
+                sound.pause();
+            }
+        });
+    }
+
+
+</script>
+<script th:include="common/index_resource::header_resource"></script>
+</body>
+</html>
