@@ -11,7 +11,7 @@ import java.util.Date;
  */
 @Data
 @Accessors(chain = true)
-public class LoginInfo implements Serializable {
+public class AdminLoginInfo implements Serializable {
 
     private Long userId;
 

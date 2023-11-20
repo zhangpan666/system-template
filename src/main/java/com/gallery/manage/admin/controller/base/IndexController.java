@@ -2,7 +2,7 @@ package com.gallery.manage.admin.controller.base;
 
 import com.gallery.manage.admin.service.AdminIndexService;
 import com.gallery.manage.admin.pojo.MenuVO;
-import com.gallery.manage.common.config.token.LoginInfo;
+import com.gallery.manage.common.config.token.AdminLoginInfo;
 import com.gallery.manage.common.util.LoginUtil;
 import com.gallery.manage.common.util.SystemUtil;
 import com.light.core.model.CommonResult;
@@ -28,12 +28,12 @@ public class IndexController extends BaseController {
 
     @RequestMapping("/index")
     public ModelAndView index() {
-        LoginInfo loginInfo = LoginUtil.getAdminLoginInfo();
+        AdminLoginInfo adminLoginInfo = LoginUtil.getAdminLoginInfo();
         ModelAndView modelAndView = new ModelAndView("admin/index");
-        modelAndView.addObject("loginInfo", loginInfo);
+        modelAndView.addObject("loginInfo", adminLoginInfo);
         String websocketUrl=new StringBuilder().append(SystemUtil.getWebsocketUrl())
-                .append(loginInfo.getSessionId()).append("/").append(loginInfo.getUserId())
-                .append("/").append(loginInfo.getUsername()).toString();
+                .append(adminLoginInfo.getSessionId()).append("/").append(adminLoginInfo.getUserId())
+                .append("/").append(adminLoginInfo.getUsername()).toString();
         modelAndView.addObject("websocketUrl",websocketUrl);
         return modelAndView;
     }

@@ -1,6 +1,6 @@
 package com.gallery.manage.common.util;
 
-import com.gallery.manage.common.config.token.LoginInfo;
+import com.gallery.manage.common.config.token.AdminLoginInfo;
 import com.gallery.manage.common.model.SysUser;
 import com.gallery.manage.common.service.SysUserService;
 import com.light.config.util.ApplicationContextUtil;
@@ -19,7 +19,7 @@ import java.util.Date;
 @DependsOn("applicationContextUtil")
 public class LoginUtil {
 
-    private static final ThreadLocal<LoginInfo> LOGIN_INFO_THREAD_LOCAL = new ThreadLocal();
+    private static final ThreadLocal<AdminLoginInfo> LOGIN_INFO_THREAD_LOCAL = new ThreadLocal();
 
 
     public static boolean setAdminLoginInfo() {
@@ -28,23 +28,23 @@ public class LoginUtil {
             Subject subject = SecurityUtils.getSubject();
             String username = subject.getPrincipal().toString();
             String key = redisInfo.getKey(username);
-            LoginInfo loginInfo = RedisUtil.get(key, redisInfo.getDbIndex());
-            if (loginInfo != null) {
-                Serializable sessionId = loginInfo.getSessionId();
+            AdminLoginInfo adminLoginInfo = RedisUtil.get(key, redisInfo.getDbIndex());
+            if (adminLoginInfo != null) {
+                Serializable sessionId = adminLoginInfo.getSessionId();
                 RedisInfo userSessionCache = ShiroConstant.RedisKey.USER_SESSION_CACHE;
                 RedisUtil.delete(userSessionCache.getKey(sessionId), userSessionCache.getDbIndex());
             }
             SysUserService userService = ApplicationContextUtil.getBean(SysUserService.class);
             SysUser sysUser = userService.getAdminUserByUsername(username);
-            loginInfo = new LoginInfo();
-            loginInfo.setUserId(sysUser.getId());
-            loginInfo.setLoginTime(new Date());
-            loginInfo.setNickname(sysUser.getNickname());
-            loginInfo.setUsername(username);
+            adminLoginInfo = new AdminLoginInfo();
+            adminLoginInfo.setUserId(sysUser.getId());
+            adminLoginInfo.setLoginTime(new Date());
+            adminLoginInfo.setNickname(sysUser.getNickname());
+            adminLoginInfo.setUsername(username);
             Serializable sessionId = subject.getSession().getId();
-            loginInfo.setSessionId(sessionId);
-            RedisUtil.set(key, loginInfo, redisInfo.getDbIndex(), redisInfo.getExpire());
-            LOGIN_INFO_THREAD_LOCAL.set(loginInfo);
+            adminLoginInfo.setSessionId(sessionId);
+            RedisUtil.set(key, adminLoginInfo, redisInfo.getDbIndex(), redisInfo.getExpire());
+            LOGIN_INFO_THREAD_LOCAL.set(adminLoginInfo);
             return true;
         } catch (Exception e) {
             log.info("缓存后台用户登录信息异常");
@@ -54,58 +54,58 @@ public class LoginUtil {
     }
 
 
-    public static LoginInfo getAdminLoginInfo() {
-        LoginInfo loginInfo = LOGIN_INFO_THREAD_LOCAL.get();
-        if (loginInfo != null) {
-            return loginInfo;
+    public static AdminLoginInfo getAdminLoginInfo() {
+        AdminLoginInfo adminLoginInfo = LOGIN_INFO_THREAD_LOCAL.get();
+        if (adminLoginInfo != null) {
+            return adminLoginInfo;
         }
         RedisInfo redisInfo = ShiroConstant.RedisKey.WEB_USER_LOGIN_INFO;
         Subject subject = SecurityUtils.getSubject();
         String username = subject.getPrincipal().toString();
         String redisInfoKey = redisInfo.getKey(username);
-        loginInfo = RedisUtil.get(redisInfoKey, redisInfo.getDbIndex());
-        if (loginInfo != null) {
-            LOGIN_INFO_THREAD_LOCAL.set(loginInfo);
-            return loginInfo;
+        adminLoginInfo = RedisUtil.get(redisInfoKey, redisInfo.getDbIndex());
+        if (adminLoginInfo != null) {
+            LOGIN_INFO_THREAD_LOCAL.set(adminLoginInfo);
+            return adminLoginInfo;
         }
         SysUserService userService = ApplicationContextUtil.getBean(SysUserService.class);
         SysUser sysUser = userService.getAdminUserByUsername(username);
-        loginInfo = new LoginInfo();
-        loginInfo.setUserId(sysUser.getId());
-        loginInfo.setNickname(sysUser.getNickname());
-        loginInfo.setUsername(username);
+        adminLoginInfo = new AdminLoginInfo();
+        adminLoginInfo.setUserId(sysUser.getId());
+        adminLoginInfo.setNickname(sysUser.getNickname());
+        adminLoginInfo.setUsername(username);
         Serializable sessionId = subject.getSession().getId();
-        loginInfo.setSessionId(sessionId);
-        RedisUtil.set(redisInfoKey, loginInfo, redisInfo.getDbIndex(), redisInfo.getExpire());
-        LOGIN_INFO_THREAD_LOCAL.set(loginInfo);
-        return loginInfo;
+        adminLoginInfo.setSessionId(sessionId);
+        RedisUtil.set(redisInfoKey, adminLoginInfo, redisInfo.getDbIndex(), redisInfo.getExpire());
+        LOGIN_INFO_THREAD_LOCAL.set(adminLoginInfo);
+        return adminLoginInfo;
     }
 
     public static Long getAdminLoginUserId() {
-        LoginInfo loginInfo = getAdminLoginInfo();
-        if (loginInfo == null) {
+        AdminLoginInfo adminLoginInfo = getAdminLoginInfo();
+        if (adminLoginInfo == null) {
             return null;
         }
-        return loginInfo.getUserId();
+        return adminLoginInfo.getUserId();
     }
 
 
     public static Long getLoginUserId() {
-        LoginInfo loginInfo = getLoginInfo();
-        if (loginInfo != null) {
-            return loginInfo.getUserId();
+        AdminLoginInfo adminLoginInfo = getLoginInfo();
+        if (adminLoginInfo != null) {
+            return adminLoginInfo.getUserId();
         }
         return null;
     }
 
 
 
-    public static LoginInfo getLoginInfo() {
+    public static AdminLoginInfo getLoginInfo() {
         return LOGIN_INFO_THREAD_LOCAL.get();
     }
 
-    public static void setLoginInfo(LoginInfo loginInfo) {
-        LOGIN_INFO_THREAD_LOCAL.set(loginInfo);
+    public static void setLoginInfo(AdminLoginInfo adminLoginInfo) {
+        LOGIN_INFO_THREAD_LOCAL.set(adminLoginInfo);
     }
 
 
