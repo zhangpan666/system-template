@@ -28,12 +28,12 @@ public class SysUserRoleServiceImpl extends ServiceImpl<SysUserRoleMapper, SysUs
     }
 
     @Override
-    public PageInfo<SysUserRole> listUserRole(SysUserRole userRole, Page page) {
-        return PageUtil.query(page, userRole, this::query);
+    public PageInfo<SysUserRole> listUserRole(SysUserRole sysUserRole, Page page) {
+        return PageUtil.query(page, sysUserRole, this::query);
     }
 
     @Override
-    public List<SysUserRole> query(SysUserRole userRole) {
-        return baseMapper.query(userRole);
+    public List<SysUserRole> query(SysUserRole sysUserRole) {
+        return baseMapper.query(sysUserRole);
     }
 }

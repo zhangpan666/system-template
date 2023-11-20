@@ -98,11 +98,11 @@ public class AdminUserServiceImpl implements AdminUserService {
     }
 
     @Override
-    public CommonResult saveUser(SysUser sysUser, SysUserRole userRole) {
+    public CommonResult saveUser(SysUser sysUser, SysUserRole sysUserRole) {
         sysUser.setAccountType(ProjectConstant.UserType.ADMIN.getKey());
         String username = sysUser.getUsername();
         String password = sysUser.getPassword();
-        Long roleId = userRole.getRoleId();
+        Long roleId = sysUserRole.getRoleId();
         if (StringUtils.isEmpty(username)) {
             return CommonResult.businessWrong("用户名不能为空");
         }
@@ -125,8 +125,8 @@ public class AdminUserServiceImpl implements AdminUserService {
         String encodePassword = ShiroUtil.getEncodePassword(username, password);
         sysUser.setPassword(encodePassword);
         sysUserService.save(sysUser);
-        userRole.setId(sysUser.getId());
-        boolean save = sysUserRoleService.save(userRole);
+        sysUserRole.setId(sysUser.getId());
+        boolean save = sysUserRoleService.save(sysUserRole);
         if (save) {
             return CommonResult.success();
         }
@@ -153,10 +153,10 @@ public class AdminUserServiceImpl implements AdminUserService {
     }
 
     @Override
-    public boolean authUser(SysUserRole userRole) {
-        boolean updateById = sysUserRoleService.updateById(userRole);
+    public boolean authUser(SysUserRole sysUserRole) {
+        boolean updateById = sysUserRoleService.updateById(sysUserRole);
         if (updateById) {
-            SysUser sysUser = sysUserService.getById(userRole.getId());
+            SysUser sysUser = sysUserService.getById(sysUserRole.getId());
             if (sysUser != null) {
                 String username = sysUser.getUsername();
                 cacheService.clearUserAuthorization(username);

@@ -85,8 +85,8 @@ public class AdminSysUserController extends BaseController {
     @RequiresPermissions({"sysUser.add"})
     @Operation(module = "后台用户", description = "添加")
     @NeedAdminLogin
-    public CommonResult saveUser(SysUser sysUser, SysUserRole userRole) {
-        return adminUserService.saveUser(sysUser, userRole);
+    public CommonResult saveUser(SysUser sysUser, SysUserRole sysUserRole) {
+        return adminUserService.saveUser(sysUser, sysUserRole);
     }
 
     @RequestMapping("delete/{id}")
@@ -103,9 +103,9 @@ public class AdminSysUserController extends BaseController {
     public ModelAndView getUserAuthPage(@PathVariable("id") Long id, HttpServletRequest request) {
         SysUser userDetail = adminUserService.getUserDetail(id);
         List<Role> roleList = roleService.list();
-        SysUserRole userRole = sysUserRoleService.getById(id);
-        if (userRole != null) {
-            userDetail.setRoleId(userRole.getRoleId());
+        SysUserRole sysUserRole = sysUserRoleService.getById(id);
+        if (sysUserRole != null) {
+            userDetail.setRoleId(sysUserRole.getRoleId());
         }
         ModelAndView modelAndView = this.getCommonModelAndView(request, "sysuser/sys_user_auth");
         modelAndView.addObject("roleList", roleList);
@@ -117,9 +117,9 @@ public class AdminSysUserController extends BaseController {
 
     @RequestMapping("/role/list")
     @RequiresPermissions({"sysUser.role.select"})
-    public ModelAndView listUserRole(SysUserRole userRole, Page page, HttpServletRequest request) {
-        PageInfo<SysUserRole> userRoleList = sysUserRoleService.listUserRole(userRole, page);
-        ModelAndView modelAndView = this.getCommonModelAndView(request, "sysuser/sys_user_role_list", userRoleList, userRole);
+    public ModelAndView listUserRole(SysUserRole sysUserRole, Page page, HttpServletRequest request) {
+        PageInfo<SysUserRole> userRoleList = sysUserRoleService.listUserRole(sysUserRole, page);
+        ModelAndView modelAndView = this.getCommonModelAndView(request, "sysuser/sys_user_role_list", userRoleList, sysUserRole);
         List<Role> roleList = roleService.list();
         modelAndView.addObject("roleList", roleList);
         return modelAndView;
@@ -129,10 +129,10 @@ public class AdminSysUserController extends BaseController {
     @RequestMapping("/role/getUpdatePage/{id}")
     @RequiresPermissions({"sysUser.role.update"})
     public ModelAndView getUserRoleUpdatePage(@PathVariable("id") Long id, HttpServletRequest request) {
-        SysUserRole userRole = sysUserRoleService.getById(id);
+        SysUserRole sysUserRole = sysUserRoleService.getById(id);
         List<Role> roleList = roleService.list();
         ModelAndView modelAndView = this.getCommonModelAndView(request, "sysuser/sys_user_role_update");
-        modelAndView.addObject("userRole", userRole);
+        modelAndView.addObject("sysUserRole", sysUserRole);
         modelAndView.addObject("roleList", roleList);
         modelAndView.addObject("adminRole", SystemUtil.getAdminRole());
         return modelAndView;
@@ -143,13 +143,13 @@ public class AdminSysUserController extends BaseController {
     @RequiresPermissions({"sysUser.role.update"})
     @Operation(module = "用户角色", description = "修改")
     @NeedAdminLogin
-    public CommonResult authUser(Long id,SysUserRole userRole) {
-        Long roleId = userRole.getRoleId();
+    public CommonResult authUser(Long id,SysUserRole sysUserRole) {
+        Long roleId = sysUserRole.getRoleId();
         Role role = roleService.getById(roleId);
         if (SystemUtil.getAdminRole().equals(role.getRoleCode())) {
             return CommonResult.businessWrong("您无权进行此操作");
         }
-        boolean result = adminUserService.authUser(userRole);
+        boolean result = adminUserService.authUser(sysUserRole);
         if (result) {
             return CommonResult.success();
         }

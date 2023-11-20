@@ -63,12 +63,12 @@ public class CustomAuthorizingRealm extends AuthorizingRealm {
             return getAdminAuthorization(simpleAuthorizationInfo);
         } else {
             Long userId = sysUser.getId();
-            SysUserRole userRole = sysUserRoleService.getUserRoleDetailByUserId(userId);
-            if (userRole == null) {
+            SysUserRole sysUserRole = sysUserRoleService.getUserRoleDetailByUserId(userId);
+            if (sysUserRole == null) {
                 return simpleAuthorizationInfo;
             }
-            Long roleId = userRole.getRoleId();
-            String roleCode = userRole.getRoleCode();
+            Long roleId = sysUserRole.getRoleId();
+            String roleCode = sysUserRole.getRoleCode();
             if (SystemUtil.isAdminRole(roleCode)) {
                 return getAdminAuthorization(simpleAuthorizationInfo);
             }

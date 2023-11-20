@@ -17,11 +17,11 @@ public interface AdminUserService {
 
     CommonResult updateUser(SysUser sysUser);
 
-    CommonResult saveUser(SysUser sysUser, SysUserRole userRole);
+    CommonResult saveUser(SysUser sysUser, SysUserRole sysUserRole);
 
     CommonResult removeBgUser(Long id);
 
-    boolean authUser(SysUserRole userRole);
+    boolean authUser(SysUserRole sysUserRole);
 
     CommonResult changePassword(String oldPassword, String newPassword);
 

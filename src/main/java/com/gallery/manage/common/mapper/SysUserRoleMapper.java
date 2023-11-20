@@ -17,5 +17,5 @@ public interface SysUserRoleMapper extends BaseMapper<SysUserRole> {
 
     SysUserRole getUserRoleDetailByUserId(Long userId);
 
-    List<SysUserRole>query(SysUserRole userRole);
+    List<SysUserRole>query(SysUserRole sysUserRole);
 }

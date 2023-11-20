@@ -10,12 +10,12 @@
 <body>
 <form class="layui-form"  onsubmit="return userAuth()" id="form">
     <br>
-    <input type="hidden" th:field="${userRole.id}">
+    <input type="hidden" th:field="${sysUserRole.id}">
     <div class="layui-form-item">
         <label class="layui-form-label">角色</label>
         <div class="layui-input-inline">
             <select name="roleId">
-                <option th:each="role:${roleList}" th:value="${role.id}" th:text="${role.roleName}" th:if="${role.roleCode!=adminRole}" th:selected="${userRole.roleId==role.id}"></option>
+                <option th:each="role:${roleList}" th:value="${role.id}" th:text="${role.roleName}" th:if="${role.roleCode!=adminRole}" th:selected="${sysUserRole.roleId==role.id}"></option>
             </select>
         </div>
     </div>

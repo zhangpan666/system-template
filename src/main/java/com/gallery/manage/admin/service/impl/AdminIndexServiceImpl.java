@@ -50,14 +50,14 @@ public class AdminIndexServiceImpl implements AdminIndexService {
             return getAllMenuList(menuList);
         } else {
             Long adminLoginUserId = LoginUtil.getAdminLoginUserId();
-            SysUserRole userRole = sysUserRoleService.getUserRoleDetailByUserId(adminLoginUserId);
-            if (userRole == null) {
+            SysUserRole sysUserRole = sysUserRoleService.getUserRoleDetailByUserId(adminLoginUserId);
+            if (sysUserRole == null) {
                 return null;
             }
-            if (SystemUtil.isAdminRole(userRole.getRoleCode())) {
+            if (SystemUtil.isAdminRole(sysUserRole.getRoleCode())) {
                 return getAllMenuList(menuList);
             }
-            List<Permission> permissionList = permissionService.getPermissionListByRoleId(userRole.getRoleId());
+            List<Permission> permissionList = permissionService.getPermissionListByRoleId(sysUserRole.getRoleId());
             if (CollectionUtils.isEmpty(permissionList)) {
                 return null;
             }

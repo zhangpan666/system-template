@@ -19,7 +19,7 @@ public interface SysUserRoleService extends IService<SysUserRole> {
 
     SysUserRole getUserRoleDetailByUserId(Long userId);
 
-    PageInfo<SysUserRole> listUserRole(SysUserRole userRole, Page page);
+    PageInfo<SysUserRole> listUserRole(SysUserRole sysUserRole, Page page);
 
-    List<SysUserRole> query(SysUserRole userRole);
+    List<SysUserRole> query(SysUserRole sysUserRole);
 }
