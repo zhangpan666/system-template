@@ -30,7 +30,7 @@ import java.util.List;
 @Controller
 @RequestMapping("/gallery/manage/admin/sysUser")
 @ConditionalOnProperty(value = "manage.enable", havingValue = "true")
-public class AdminUserController extends BaseController {
+public class AdminSysUserController extends BaseController {
 
     @Autowired
     AdminUserService adminUserService;
