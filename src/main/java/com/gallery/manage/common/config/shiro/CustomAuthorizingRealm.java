@@ -82,7 +82,7 @@ public class CustomAuthorizingRealm extends AuthorizingRealm {
                 String permissions = permission.getPermission();
                 if (!StringUtils.isEmpty(permissions)) {
                     String[] permissionsArray = permissions.split(",");
-                    if (permissionsArray != null && permissionsArray.length > 0) {
+                    if (permissionsArray.length > 0) {
                         stringPermissions.addAll(Arrays.asList(permissionsArray));
                     }
                 }
